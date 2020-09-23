@@ -23,10 +23,27 @@ object RecFun extends RecFunInterface {
   /**
    * Exercise 2
    */
-  def balance(chars: List[Char]): Boolean = ???
+  def balance(chars: List[Char]): Boolean = {
+    def help(chars: List[Char], open: Int): Boolean = {
+      if (open < 0) false
+      else if (chars.isEmpty) open == 0
+      else {
+        if (chars.head == '(') help(chars.tail, open + 1)
+        else if (chars.head == ')') help(chars.tail, open - 1)
+        else help(chars.tail, open)
+      }
+    }
+    print(help(chars, 0))
+    help(chars, 0)
+  }
 
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+    if (money == 0) 1
+    else if (money < 0) 0
+    else if (coins.nonEmpty) countChange(money - coins.head, coins) + countChange(money, coins.tail)
+    else 0
+  }
 }
